@@ -11,7 +11,7 @@ Pensada per a un homelab: es pot posar com a quadre al Homepage o com a enllaç 
 ## Què necessites
 
 - Un servidor amb **podman** (quadlets) i **nginx** (o qualsevol proxy).
-- Un compte de Spotify.
+- Un compte de Spotify **Premium** (Spotify ho exigeix per a les aplicacions en mode desenvolupament).
 - Un navegador, a l'ordinador des d'on et connectes per SSH.
 
 ## Pas 1. Crea l'aplicació a Spotify (al navegador)
