@@ -31,7 +31,7 @@ API_URL = os.environ.get("SPOTIFY_API_URL", "https://api.spotify.com/v1/me/playe
 
 SCOPE = "user-read-playback-state"
 REFRESH_FILE = os.path.join(DATA_DIR, "refresh_token")
-CACHE_SECONDS = 3  # no preguntem a Spotify més d'un cop cada 3 s, tingui els espectadors que tingui
+CACHE_SECONDS = 5  # no preguntem a Spotify més d'un cop cada 5 s, tingui els espectadors que tingui
 
 
 def log(msg):
