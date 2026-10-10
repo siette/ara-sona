@@ -1,0 +1,18 @@
+[Unit]
+Description=Ara sona (què sona al compte de Spotify)
+After=network-online.target
+
+[Container]
+ContainerName=ara-sona
+Image=docker.io/library/python:3.13-alpine
+Volume=%h/quadlets/ara_sona/config:/config:Z
+EnvironmentFile=%h/quadlets/ara_sona/config/ara-sona.env
+Exec=python /config/app.py
+# Canvia-ho per la xarxa on tinguis el nginx:
+Network=xarxa-net
+
+[Service]
+Restart=always
+
+[Install]
+WantedBy=default.target
