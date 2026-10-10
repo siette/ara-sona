@@ -151,6 +151,7 @@ Homer no té quadre amb iframe: hi pots posar un **enllaç** que obri la pàgina
   pot veure què escoltes. Si es filtren, a Spotify fes *Rotate client secret*
   al dashboard i torna a fer el pas 3.
 - Qualsevol persona amb accés a la URL veu què sones: no l'exposis a Internet.
+- **El `refresh_token` caduca als 180 dies** (des que vas autoritzar, i renovar-ho no ho allarga). Quan passi, la pàgina es posarà en error: torna a fer el pas 3.
 
 ## Crèdits
 
