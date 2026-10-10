@@ -2,8 +2,7 @@
 
 Una pàgina web petita que mostra **què sona ara al teu compte de Spotify**
 (des de qualsevol dispositiu): portada, títol, artista i barra de progrés.
-Pensada per a un homelab: es pot posar com a quadre al Homepage i/o
-compartir amb la família.
+Pensada per a un homelab: es pot posar com a quadre al Homepage o com a enllaç al Homer.
 
 - Només Python (cap llibreria externa), una sola imatge oficial `python:3.13-alpine`.
 - No cal construir cap imatge: es munta `app.py` des d'una carpeta teva.
@@ -12,7 +11,7 @@ compartir amb la família.
 ## Què necessites
 
 - Un servidor amb **podman** (quadlets) i **nginx** (o qualsevol proxy).
-- Un compte de Spotify. L'API funciona amb compte gratuït per a un sol usuari.
+- Un compte de Spotify.
 - Un navegador, a l'ordinador des d'on et connectes per SSH.
 
 ## Pas 1. Crea l'aplicació a Spotify (al navegador)
@@ -33,7 +32,7 @@ compartir amb la família.
 ```bash
 mkdir -p ~/quadlets/ara_sona/config
 cd ~/quadlets/ara_sona/config
-# copia aquí app.py i ara-sona.env.example
+# copia aquí app.py, ara-sona.env.example i ara-sona.container
 cp ara-sona.env.example ara-sona.env
 chmod 600 ara-sona.env
 vim ara-sona.env
@@ -104,6 +103,9 @@ location /ara-sona/ {
 }
 ```
 
+Cal que nginx tingui un `resolver` (el DNS de la xarxa de podman) definit; si no,
+el `set $upstream_ara` no resoldrà el nom `ara-sona`.
+
 Després, dins del contenidor de nginx: `nginx -t && nginx -s reload`.
 (El contenidor de nginx i `ara-sona` han d'estar a la mateixa xarxa de podman.)
 
@@ -127,22 +129,17 @@ A `services.yaml`:
           allowFullscreen: false
 ```
 
-## Pas 7. Compartir-ho amb la família (opcional)
+## Pas 7. Enllaç des del Homer (opcional)
 
-- **Homer** no té quadre amb iframe: hi pots posar un **enllaç** que obri la pàgina.
-- Si la família confia en un altre certificat/domini, el nginx d'aquell servidor
-  pot fer de proxy cap al teu:
+Homer no té quadre amb iframe: hi pots posar un **enllaç** que obri la pàgina.
 
-```nginx
-location = /ara-sona { return 301 /ara-sona/; }
-location /ara-sona/ {
-    proxy_pass https://IP-DEL-TEU-SERVIDOR/ara-sona/;
-    proxy_ssl_server_name on;
-    proxy_ssl_name el-teu-domini;
-    proxy_ssl_verify off;
-    proxy_http_version 1.1;
-    proxy_set_header Host el-teu-domini;
-}
+```yaml
+  - name: "Què sona?"
+    icon: "fas fa-music"
+    subtitle: "Ara sona"
+    tag: "spotify"
+    url: "https://el-teu-domini/ara-sona/"
+    target: "_blank"
 ```
 
 ## Notes
@@ -153,4 +150,9 @@ location /ara-sona/ {
 - **Seguretat**: no publiquis mai `ara-sona.env` ni `refresh_token`. Qui els tingui
   pot veure què escoltes. Si es filtren, a Spotify fes *Rotate client secret*
   al dashboard i torna a fer el pas 3.
-- Qualsevol persona amb accés a la URL veu què sones: no l'exposis a Internet sense protecció.
+- Qualsevol persona amb accés a la URL veu què sones: no l'exposis a Internet.
+
+## Crèdits
+
+Fet amb l'ajuda de Claude (Anthropic).
+
