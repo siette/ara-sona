@@ -144,7 +144,7 @@ Homer no té quadre amb iframe: hi pots posar un **enllaç** que obri la pàgina
 
 ## Notes
 
-- La pàgina consulta Spotify com a màxim cada 3 s (memòria cau) i respecta l'avís 429 de Spotify.
+- La pàgina consulta Spotify com a màxim cada 5 s (memòria cau) i respecta l'avís 429 de Spotify.
 - La pàgina té tema fosc. Per canviar els colors, mira les variables CSS d'`app.py`
   (`--fons`, `--text`, `--fluix`, `--barra`).
 - **Seguretat**: no publiquis mai `ara-sona.env` ni `refresh_token`. Qui els tingui
